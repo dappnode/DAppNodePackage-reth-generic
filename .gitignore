@@ -1,0 +1,3 @@
+build_*
+.DS_Store
+.env

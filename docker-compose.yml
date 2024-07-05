@@ -1,0 +1,15 @@
+version: "3.5"
+services:
+  reth:
+    build:
+      context: reth
+      args:
+        UPSTREAM_VERSION: v0.2.0-beta.9
+        STAKER_SCRIPTS_VERSION: v0.1.0
+    volumes:
+      - reth:/data/reth
+    environment:
+      EXTRA_OPTS:
+    restart: unless-stopped
+volumes:
+  reth: {}

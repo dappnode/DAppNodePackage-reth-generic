@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  reth:
+    build:
+      args:
+        NETWORK: mainnet
+        P2P_PORT: 30503
+    ports:
+      - 30503:30503/tcp
+      - 30503:30503/udp

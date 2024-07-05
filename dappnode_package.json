@@ -1,0 +1,26 @@
+{
+  "upstream": [
+    {
+      "repo": "paradigmxyz/reth",
+      "version": "v0.2.0-beta.9",
+      "arg": "UPSTREAM_VERSION"
+    }
+  ],
+  "shortDescription": "Reth is the Rust implementation of the Ethereum protocol.",
+  "description": "Ethereum is a global, open-source platform for decentralized applications where you can write code that controls digital value, runs exactly as programmed, and is accessible anywhere in the world.",
+  "type": "service",
+  "architectures": ["linux/amd64", "linux/arm64"],
+  "chain": "ethereum",
+  "dockerTimeout": "20min",
+  "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
+  "categories": ["Blockchain"],
+  "keywords": ["reth", "rust-ethereum", "ethereum", "client", "execution"],
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dappnode/DAppNodePackage-reth-generic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dappnode/DAppNodePackage-reth-generic/issues"
+  }
+}

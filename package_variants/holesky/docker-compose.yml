@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  reth:
+    build:
+      args:
+        NETWORK: holesky
+        P2P_PORT: 30504
+    ports:
+      - 30504:30504/tcp
+      - 30504:30504/udp

@@ -1,0 +1,15 @@
+{
+  "name": "holesky-reth.dnp.dappnode.eth",
+  "version": "0.1.0",
+  "links": {
+    "api": "http://holesky-reth.dappnode:8545",
+    "apiEngine": "http://holesky-reth.dappnode:8551",
+    "homepage": "https://github.com/dappnode/DAppNodePackage-reth-generic#readme"
+  },
+  "globalEnvs": [
+    {
+      "envs": ["CONSENSUS_CLIENT_HOLESKY"],
+      "services": ["reth"]
+    }
+  ]
+}
