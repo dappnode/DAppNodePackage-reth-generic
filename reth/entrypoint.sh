@@ -8,6 +8,8 @@ SUPPORTED_NETWORKS="holesky mainnet"
 run_client() {
   echo "[INFO - entrypoint] Running client"
 
+  echo "${JWT_PATH}"
+
   # shellcheck disable=SC2086
   exec reth \
     node \
