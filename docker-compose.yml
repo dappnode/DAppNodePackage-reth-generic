@@ -4,12 +4,12 @@ services:
     build:
       context: reth
       args:
-        UPSTREAM_VERSION: v0.2.0-beta.9
+        UPSTREAM_VERSION: v1.0.1
         STAKER_SCRIPTS_VERSION: v0.1.0
     volumes:
       - reth:/data/reth
     environment:
-      EXTRA_OPTS:
+      EXTRA_OPTS: null
     restart: unless-stopped
 volumes:
   reth: {}
