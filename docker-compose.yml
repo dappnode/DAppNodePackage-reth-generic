@@ -6,6 +6,7 @@ services:
       args:
         UPSTREAM_VERSION: v0.2.0-beta.9
         STAKER_SCRIPTS_VERSION: v0.1.0
+        DATA_DIR: /data/reth
     volumes:
       - reth:/data/reth
     environment:

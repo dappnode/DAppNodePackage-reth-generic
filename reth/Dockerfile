@@ -5,19 +5,23 @@ FROM ghcr.io/paradigmxyz/reth:${UPSTREAM_VERSION}
 ARG NETWORK
 ARG P2P_PORT
 ARG STAKER_SCRIPTS_VERSION
+ARG DATA_DIR
 
-COPY /security /security
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN apt-get update && apt-get --yes install --no-install-recommends curl && apt-get clean
 
-RUN apt-get update && apt-get install --no-install-recommends -y curl && apt-get clean
-
-ENV DATA_DIR=/data/reth \
-    NETWORK=${NETWORK} \
-    P2P_PORT=${P2P_PORT} \
+ENV DATA_DIR=${DATA_DIR} \
+    SECURITY_PATH=/security \
     STAKER_SCRIPTS_URL=https://github.com/dappnode/staker-package-scripts/releases/download/${STAKER_SCRIPTS_VERSION}
+
+COPY /security ${SECURITY_PATH}
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
 ADD ${STAKER_SCRIPTS_URL}/execution_tools.sh /etc/profile.d/
 
 RUN chmod +rx /usr/local/bin/entrypoint.sh /etc/profile.d/execution_tools.sh
+
+# Placed at the end to regenerate the least amount of layers
+ENV NETWORK=${NETWORK} \
+    P2P_PORT=${P2P_PORT}
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
