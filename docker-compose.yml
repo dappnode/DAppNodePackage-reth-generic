@@ -4,7 +4,7 @@ services:
     build:
       context: reth
       args:
-        UPSTREAM_VERSION: v1.0.3
+        UPSTREAM_VERSION: v1.0.4
         STAKER_SCRIPTS_VERSION: v0.1.0
         DATA_DIR: /data/reth
     volumes:
