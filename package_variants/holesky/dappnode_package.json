@@ -11,5 +11,12 @@
       "envs": ["CONSENSUS_CLIENT_HOLESKY"],
       "services": ["reth"]
     }
-  ]
+  ],
+  "optionalDependencies": {
+    "lighthouse-holesky.dnp.dappnode.eth": ">=0.1.3",
+    "prysm-holesky.dnp.dappnode.eth": ">=0.1.4",
+    "teku-holesky.dnp.dappnode.eth": ">=0.1.3",
+    "nimbus-holesky.dnp.dappnode.eth": ">=0.1.4",
+    "lodestar-holesky.dnp.dappnode.eth": ">=0.1.8"
+  }
 }

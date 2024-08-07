@@ -1,11 +1,9 @@
 #!/bin/sh
 
-SUPPORTED_NETWORKS="holesky mainnet"
-
 # shellcheck disable=SC1091
 . /etc/profile
 
-JWT_PATH=$(get_jwt_path "${NETWORK}" "${SUPPORTED_NETWORKS}" "${SECURITY_PATH}")
+JWT_PATH="/security/${NETWORK}/jwtsecret.hex"
 
 post_jwt_to_dappmanager "${JWT_PATH}"
 
