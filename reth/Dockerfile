@@ -10,10 +10,9 @@ ARG DATA_DIR
 RUN apt-get update && apt-get --yes install --no-install-recommends curl && apt-get clean
 
 ENV DATA_DIR=${DATA_DIR} \
-    SECURITY_PATH=/security \
+    JWT_PATH=/jwtsecret.hex \
     STAKER_SCRIPTS_URL=https://github.com/dappnode/staker-package-scripts/releases/download/${STAKER_SCRIPTS_VERSION}
 
-COPY /security ${SECURITY_PATH}
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
 ADD ${STAKER_SCRIPTS_URL}/execution_tools.sh /etc/profile.d/

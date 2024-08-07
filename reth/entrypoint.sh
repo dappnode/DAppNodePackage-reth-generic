@@ -3,7 +3,8 @@
 # shellcheck disable=SC1091
 . /etc/profile
 
-JWT_PATH="/security/${NETWORK}/jwtsecret.hex"
+JWT_SECRET=$(get_jwt_secret_by_network "${NETWORK}")
+echo "${JWT_SECRET}" >"${JWT_PATH}"
 
 post_jwt_to_dappmanager "${JWT_PATH}"
 
