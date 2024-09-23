@@ -11,6 +11,6 @@
     "prysm.dnp.dappnode.eth": ">=3.0.16",
     "teku.dnp.dappnode.eth": ">=2.0.13",
     "nimbus.dnp.dappnode.eth": ">=1.0.14",
-    "lodestar.dnp.dappnode.eth": ">=0.1.18"
+    "lodestar.dnp.dappnode.eth": ">=0.1.20"
   }
 }
