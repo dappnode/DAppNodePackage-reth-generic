@@ -1,0 +1,11 @@
+[
+    {
+        "labels": {
+            "package": "reth.dnp.dappnode.eth",
+            "service": "reth"
+        },
+        "targets": [
+            "reth.dappnode:6060"
+        ]
+    }
+]

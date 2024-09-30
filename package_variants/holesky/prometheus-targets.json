@@ -1,0 +1,11 @@
+[
+    {
+        "labels": {
+            "package": "holesky-reth.dnp.dappnode.eth",
+            "service": "reth"
+        },
+        "targets": [
+            "holesky-reth.dappnode:6060"
+        ]
+    }
+]
