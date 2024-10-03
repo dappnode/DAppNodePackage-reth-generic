@@ -1,6 +1,6 @@
 {
   "name": "holesky-reth.dnp.dappnode.eth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "links": {
     "api": "http://holesky-reth.dappnode:8545",
     "apiEngine": "http://holesky-reth.dappnode:8551",
