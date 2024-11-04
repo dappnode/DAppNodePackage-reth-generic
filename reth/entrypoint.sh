@@ -27,6 +27,7 @@ exec reth \
   --ws.addr 0.0.0.0 \
   --ws.port 8546 \
   --ws.origins "*" \
+  --engine.legacy \
   --authrpc.addr 0.0.0.0 \
   --authrpc.port 8551 \
   --authrpc.jwtsecret "${JWT_PATH}" ${EXTRA_OPTS}
