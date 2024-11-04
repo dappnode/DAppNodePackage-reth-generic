@@ -11,6 +11,7 @@ services:
       - reth:/data/reth
     environment:
       EXTRA_OPTS: null
+      ARCHIVE_NODE: "false"
     restart: unless-stopped
 volumes:
   reth: {}

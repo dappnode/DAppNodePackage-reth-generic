@@ -13,7 +13,7 @@ echo "[INFO - entrypoint] Running Reth client for network: ${NETWORK}"
 # shellcheck disable=SC2086
 exec reth \
   node \
-  --full \
+  $( [ "${ARCHIVE_NODE}" = false ] && printf -- "--full" ) \
   --chain "${NETWORK}" \
   --metrics 0.0.0.0:6060 \
   --datadir "${DATA_DIR}" \
