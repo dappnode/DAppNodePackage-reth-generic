@@ -7,6 +7,7 @@ services:
         UPSTREAM_VERSION: v1.1.0
         STAKER_SCRIPTS_VERSION: v0.1.0
         DATA_DIR: /data/reth
+        ARCHIVE_NODE: false
     volumes:
       - reth:/data/reth
     environment:
