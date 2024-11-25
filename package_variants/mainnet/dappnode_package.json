@@ -7,10 +7,10 @@
     "homepage": "https://github.com/dappnode/DAppNodePackage-reth-generic#readme"
   },
   "optionalDependencies": {
-    "lighthouse.dnp.dappnode.eth": ">=1.0.12",
     "prysm.dnp.dappnode.eth": ">=3.0.16",
+    "lighthouse.dnp.dappnode.eth": ">=1.0.13",
+    "nimbus.dnp.dappnode.eth": ">=2.0.0",
+    "lodestar.dnp.dappnode.eth": ">=0.1.22",
     "teku.dnp.dappnode.eth": ">=2.0.13",
-    "nimbus.dnp.dappnode.eth": ">=1.0.14",
-    "lodestar.dnp.dappnode.eth": ">=0.1.20"
   }
 }
