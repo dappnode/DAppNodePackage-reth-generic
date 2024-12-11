@@ -1,6 +1,6 @@
 {
   "name": "reth.dnp.dappnode.eth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "links": {
     "api": "http://reth.dappnode:8545",
     "apiEngine": "http://reth.dappnode:8551",
@@ -11,6 +11,6 @@
     "lighthouse.dnp.dappnode.eth": ">=1.0.13",
     "nimbus.dnp.dappnode.eth": ">=0.1.14",
     "lodestar.dnp.dappnode.eth": ">=0.1.22",
-    "teku.dnp.dappnode.eth": ">=2.0.13",
+    "teku.dnp.dappnode.eth": ">=2.0.13"
   }
 }
