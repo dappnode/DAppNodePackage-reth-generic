@@ -10,6 +10,7 @@ services:
     volumes:
       - reth:/data/reth
     environment:
+      RPC_MAX_BLOCKS_PER_FILTER: "0"
       EXTRA_OPTS: null
       ARCHIVE_NODE: "false"
     restart: unless-stopped

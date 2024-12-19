@@ -28,6 +28,7 @@ exec reth \
   --ws.port 8546 \
   --ws.origins "*" \
   --engine.legacy \
+  --rpc.max-blocks-per-filter="${RPC_MAX_BLOCKS_PER_FILTER}" \
   --authrpc.addr 0.0.0.0 \
   --authrpc.port 8551 \
   --authrpc.jwtsecret "${JWT_PATH}" ${EXTRA_OPTS}
