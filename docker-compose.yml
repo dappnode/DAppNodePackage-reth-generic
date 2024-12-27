@@ -11,11 +11,6 @@ services:
       - reth:/data/reth
     environment:
       RPC_MAX_BLOCKS_PER_FILTER: "0"
-      BLOCK_INTERVAL: "0"
-      PRUNE_SENDERRECOVERY_FULL: "true"
-      PRUNE_RECEIPTS_BEFORE: "0"
-      PRUNE_ACCOUNTHISTORY_DISTANCE: "10064"
-      PRUNE_STORAGEHISTORY_DISTANCE: "10064"
       EXTRA_OPTS: null
       ARCHIVE_NODE: "false"
     restart: unless-stopped

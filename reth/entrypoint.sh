@@ -13,7 +13,7 @@ echo "[INFO - entrypoint] Running Reth client for network: ${NETWORK}"
 # shellcheck disable=SC2086
 exec reth \
   node \
-  $([ "${ARCHIVE_NODE}" = false ] && printf -- "--full") \
+  $( [ "${ARCHIVE_NODE}" = false ] && printf -- "--block-interval 5 --prune.senderrecovery.full --prune.receipts.before 0 --prune.accounthistory.distance 10064 --prune.storagehistory.distance 10064" ) \
   --chain "${NETWORK}" \
   --metrics 0.0.0.0:6060 \
   --datadir "${DATA_DIR}" \
@@ -31,9 +31,4 @@ exec reth \
   --rpc.max-blocks-per-filter="${RPC_MAX_BLOCKS_PER_FILTER}" \
   --authrpc.addr 0.0.0.0 \
   --authrpc.port 8551 \
-  --authrpc.jwtsecret "${JWT_PATH}" \
-  --block-interval "${BLOCK_INTERVAL}" \
-  $([ "${PRUNE_SENDERRECOVERY_FULL}" = true ] && printf -- "--prune.senderrecovery.full") \
-  --prune.receipts.before "${PRUNE_RECEIPTS_BEFORE}" \
-  --prune.accounthistory.distance "${PRUNE_ACCOUNTHISTORY_DISTANCE}" \
-  --prune.storagehistory.distance "${PRUNE_STORAGEHISTORY_DISTANCE}" ${EXTRA_OPTS}
+  --authrpc.jwtsecret "${JWT_PATH}" ${EXTRA_OPTS}
