@@ -1,6 +1,6 @@
 {
   "name": "reth.dnp.dappnode.eth",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "links": {
     "api": "http://reth.dappnode:8545",
     "apiEngine": "http://reth.dappnode:8551",
