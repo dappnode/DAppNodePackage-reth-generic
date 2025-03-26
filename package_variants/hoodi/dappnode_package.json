@@ -1,6 +1,6 @@
 {
   "name": "hoodi-reth.dnp.dappnode.eth",
-  "version": "0.1.4",
+  "version": "0.1.0",
   "links": {
     "api": "http://hoodi-reth.dappnode:8545",
     "apiEngine": "http://hoodi-reth.dappnode:8551",
