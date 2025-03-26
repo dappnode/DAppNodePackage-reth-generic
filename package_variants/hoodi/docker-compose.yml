@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  reth:
+    build:
+      args:
+        NETWORK: hoodi
+        P2P_PORT: 30506
+    ports:
+      - 30506:30506/tcp
+      - 30506:30506/udp
