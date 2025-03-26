@@ -1,0 +1,11 @@
+[
+    {
+        "labels": {
+            "package": "hoodi-reth.dnp.dappnode.eth",
+            "service": "reth"
+        },
+        "targets": [
+            "hoodi-reth.dappnode:6060"
+        ]
+    }
+]

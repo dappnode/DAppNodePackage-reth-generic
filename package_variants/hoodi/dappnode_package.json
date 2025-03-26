@@ -1,0 +1,9 @@
+{
+  "name": "hoodi-reth.dnp.dappnode.eth",
+  "version": "0.1.4",
+  "links": {
+    "api": "http://hoodi-reth.dappnode:8545",
+    "apiEngine": "http://hoodi-reth.dappnode:8551",
+    "homepage": "https://github.com/dappnode/DAppNodePackage-reth-generic#readme"
+  }
+}
