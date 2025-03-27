@@ -4,6 +4,11 @@
       "repo": "paradigmxyz/reth",
       "version": "v1.3.4",
       "arg": "UPSTREAM_VERSION"
+    },
+    {
+      "repo": "dappnode/staker-package-scripts",
+      "version": "v0.1.2",
+      "arg": "STAKER_SCRIPTS_VERSION"
     }
   ],
   "shortDescription": "Reth is the Rust implementation of the Ethereum protocol.",
