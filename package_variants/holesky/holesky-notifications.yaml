@@ -1,8 +1,8 @@
 endpoints:
-  - name: "Hoodi ETH Node Syncing Check"
+  - name: "Holesky ETH Node Syncing Check"
     enabled: true
-    group: "hoodi"
-    url: "http://hoodi-reth.dappnode:8545"
+    group: "holesky"
+    url: "http://holesky-reth.dappnode:8545"
     method: "POST"
     body: |
       {"jsonrpc": "2.0", "id": 1, "method": "eth_syncing", "params": []}
@@ -12,22 +12,22 @@ endpoints:
     conditions:
       - "[BODY].result == false"
     definition:
-      title: "Hoodi ETH Node Synced Check"
-      description: "Check if the Hoodi ETH Node is synced. You will receive a notification if the node is syncing and another one when it is synced."
-    correlationId: "hoodi-reth-eth-syncing"
+      title: "Holesky ETH Node Synced Check"
+      description: "Check if the Holesky ETH Node is synced. You will receive a notification if the node is syncing and another one when it is synced."
+    correlationId: "holesky-reth-eth-syncing"
     isBanner: false
     priority: "medium"
     alerts:
       - type: custom
         enabled: true
-        description: "Reth Hoodi Node syncing"
+        description: "Reth Holesky Node syncing"
         failure-threshold: 4
         success-threshold: 1
         send-on-resolved: true
-  - name: "Hoodi ETH Node Peers count Check"
+  - name: "Holesky ETH Node Peers count Check"
     enabled: true
-    group: "hoodi"
-    url: "http://hoodi-reth.dappnode:8545"
+    group: "holesky"
+    url: "http://holesky-reth.dappnode:8545"
     method: "POST"
     body: |
       {"jsonrpc": "2.0", "id": 1, "method": "net_peerCount", "params": []}
@@ -37,9 +37,9 @@ endpoints:
     conditions:
       - "[BODY].result >= 10"
     definition:
-      title: "Hoodi ETH Node Peers count Check"
-      description: "Check if the Hoodi ETH Node has a minimum of peers. You will receive a notification if the node has less than the peers defined for 5 minutes and another one when it has more than the peers defined."
-    correlationId: "hoodi-reth-eth-peers"
+      title: "Holesky ETH Node Peers count Check"
+      description: "Check if the Holesky ETH Node has a minimum of peers. You will receive a notification if the node has less than the peers defined for 5 minutes and another one when it has more than the peers defined."
+    correlationId: "holesky-reth-eth-peers"
     isBanner: false
     priority: "low"
     metric:
@@ -49,7 +49,7 @@ endpoints:
     alerts:
       - type: custom
         enabled: true
-        description: "Reth Hoodi Node peers count"
+        description: "Reth Holesky Node peers count"
         failure-threshold: 10
         success-threshold: 1
         send-on-resolved: true

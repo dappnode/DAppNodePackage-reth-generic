@@ -1,7 +1,6 @@
 endpoints:
   - name: "Mainnet ETH Node Syncing Check"
     enabled: true
-    correlation-id: "reth-syncing"
     group: "ethereum"
     url: "http://reth.dappnode:8545"
     method: "POST"
@@ -15,17 +14,18 @@ endpoints:
     definition:
       title: "Mainnet ETH Node Synced Check"
       description: "Check if the Mainnet ETH Node is synced. You will receive a notification if the node is syncing and another one when it is synced."
+    correlationId: "reth-eth-syncing"
     isBanner: false
+    priority: "medium"
     alerts:
       - type: custom
         enabled: true
         description: "Reth Ethereum Node syncing"
-        failure-threshold: 2
+        failure-threshold: 4
         success-threshold: 1
         send-on-resolved: true
   - name: "Mainnet ETH Node Peers count Check"
     enabled: true
-    correlation-id: "reth-peers"
     group: "ethereum"
     url: "http://reth.dappnode:8545"
     method: "POST"
@@ -35,15 +35,21 @@ endpoints:
       Content-Type: "application/json"
     interval: "30s"
     conditions:
-      - "[BODY].result > 10"
+      - "[BODY].result >= 10"
     definition:
       title: "Mainnet ETH Node Peers count Check"
-      description: "Check if the Mainnet ETH Node has a minimum of peers. You will receive a notification if the node has less than the peers defined and another one when it has more than the peers defined."
+      description: "Check if the Mainnet ETH Node has a minimum of peers. You will receive a notification if the node has less than the peers defined for 5 minutes and another one when it has more than the peers defined."
+    correlationId: "reth-eth-peers"
     isBanner: false
+    priority: "low"
+    metric:
+      min: 0
+      max: 50
+      unit: "peers"
     alerts:
       - type: custom
         enabled: true
         description: "Reth Ethereum Node peers count"
-        failure-threshold: 2
+        failure-threshold: 10
         success-threshold: 1
         send-on-resolved: true
