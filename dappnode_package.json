@@ -29,6 +29,6 @@
     "url": "https://github.com/dappnode/DAppNodePackage-reth-generic/issues"
   },
   "requirements": {
-    "minimumDappnodeVersion": "0.2.101"
+    "minimumDappnodeVersion": "0.2.106"
   }
 }
