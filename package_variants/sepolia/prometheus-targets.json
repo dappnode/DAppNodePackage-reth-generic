@@ -1,0 +1,11 @@
+[
+    {
+        "labels": {
+            "package": "sepolia-reth.dnp.dappnode.eth",
+            "service": "reth"
+        },
+        "targets": [
+            "sepolia-reth.dappnode:6060"
+        ]
+    }
+]
