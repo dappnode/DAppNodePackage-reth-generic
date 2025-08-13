@@ -1,0 +1,9 @@
+{
+  "name": "sepolia-reth.dnp.dappnode.eth",
+  "version": "0.1.2",
+  "links": {
+    "api": "http://sepolia-reth.dappnode:8545",
+    "apiEngine": "http://sepolia-reth.dappnode:8551",
+    "homepage": "https://github.com/dappnode/DAppNodePackage-reth-generic#readme"
+  }
+}

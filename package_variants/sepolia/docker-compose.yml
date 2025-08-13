@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  reth:
+    build:
+      args:
+        NETWORK: sepolia
+        P2P_PORT: 30507
+    ports:
+      - 30507:30507/tcp
+      - 30507:30507/udp
