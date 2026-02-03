@@ -1,40 +1,52 @@
 name: "Main"
 on:
+  workflow_dispatch:
+    inputs:
+      consensus_client:
+        description: 'Consensus Client'
+        required: true
+        type: choice
+        options:
+          - lodestar
+          - teku
+          - prysm
+          - nimbus
+          - lighthouse
   repository_dispatch:
   pull_request:
   push:
     branches:
       - "main"
-      - "master"
-      - "v[0-9]+.[0-9]+.[0-9]+"
     paths-ignore:
       - "README.md"
 
 jobs:
   build-test:
-    runs-on: ubuntu-latest
-    name: Build test
+    runs-on: staking-test-hoodi
+    name: Build and test
+    if: "!contains(github.ref, 'no-test')"
     steps:
-      - uses: actions/checkout@v4
-      - run: npx @dappnode/dappnodesdk build --skip_save --variant mainnet
-
-  # e2e-test:
-  #   runs-on: mainnet
-  #   needs: build-test
-  #   if: github.event_name != 'push'
-  #   name: End to end tests
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - run: npx @dappnode/dappnodesdk@latest github-action test-end-to-end --errorLogsTimeout 120 --healthCheckUrl http://geth.dappnode:8545 --network mainnet
+      - uses: actions/checkout@v6
+      - name: Build and upload
+        run: npx @dappnode/dappnodesdk build --provider=http://$(docker inspect DAppNodeCore-ipfs.dnp.dappnode.eth --format '{{.NetworkSettings.Networks.dncore_network.IPAddress}}'):5001 --variant=hoodi
+      - name: Run staker test runner
+        run: |
+          docker run --rm --pull=always \
+            --network dncore_network -e CONSENSUS_CLIENT=${{ github.event.inputs.consensus_client }} \
+            -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes -v $PWD/package_variants:/app/package_variants  \
+            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -e GITHUB_REPOSITORY=${{ github.repository }} -e GITHUB_PR_NUMBER=${{ github.event.pull_request.number }} -e GITHUB_RUN_ID=${{ github.run_id }} -e GITHUB_SERVER_URL=${{ github.server_url }} \
+            ghcr.io/dappnode/staker-test-util/test-runner:latest
 
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
+    needs: [build-test]
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'repository_dispatch'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Publish
         run: npx @dappnode/dappnodesdk publish patch --dappnode_team_preset --timeout 2h --all-variants
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEVELOPER_ADDRESS: "0xf35960302a07022aba880dffaec2fdd64d5bf1c1"
+
