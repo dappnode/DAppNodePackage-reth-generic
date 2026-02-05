@@ -48,12 +48,15 @@ jobs:
 
   release:
     name: Release
-    runs-on: ubuntu-latest
+    runs-on: ipfs-dev-gateway
     needs: [test]
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
       - name: Publish
-        run: npx @dappnode/dappnodesdk publish patch --dappnode_team_preset --timeout 2h --all-variants
+        run: npx @dappnode/dappnodesdk publish patch --content_provider=http://10.200.200.7:5001 --eth_provider=https://web3.dappnode.net --timeout 2h --all-variants
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEVELOPER_ADDRESS: "0xf35960302a07022aba880dffaec2fdd64d5bf1c1"
