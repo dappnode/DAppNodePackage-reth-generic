@@ -1,0 +1,62 @@
+name: "Release"
+on:
+  workflow_dispatch:
+    inputs:
+      consensus_client:
+        description: "Consensus Client"
+        required: true
+        type: choice
+        options: [lodestar, teku, prysm, nimbus, lighthouse]
+  push:
+    branches:
+      - "main"
+    paths-ignore:
+      - "README.md"
+
+jobs:
+  build:
+    runs-on: staking-test-hoodi
+    name: Build
+    outputs:
+      ipfs_hash: ${{ steps.extract_hash.outputs.ipfs_hash }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build and upload
+        run: npx @dappnode/dappnodesdk build --provider=http://$(docker inspect DAppNodeCore-ipfs.dnp.dappnode.eth --format '{{.NetworkSettings.Networks.dncore_network.IPAddress}}'):5001 --variant=hoodi
+      - name: Extract IPFS hash from releases.json
+        id: extract_hash
+        run: |
+          # Get the last key's hash from releases.json
+          IPFS_HASH=$(jq -r 'to_entries | last | .value.hash' package_variants/hoodi/releases.json)
+          echo "ipfs_hash=$IPFS_HASH" >> $GITHUB_OUTPUT
+          echo "Extracted IPFS hash: $IPFS_HASH"
+
+  test:
+    name: Test
+    runs-on: staking-test-hoodi
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run staker test runner
+        run: |
+          docker run --rm --pull=always \
+            --network dncore_network -e CONSENSUS_CLIENT=${{ github.event.inputs.consensus_client }} \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -e MODE=test -e IPFS_HASH=${{ needs.build.outputs.ipfs_hash }} \
+            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -e GITHUB_REPOSITORY=${{ github.repository }} -e GITHUB_PR_NUMBER=${{ github.event.pull_request.number }} -e GITHUB_RUN_ID=${{ github.run_id }} -e GITHUB_SERVER_URL=${{ github.server_url }} \
+            ghcr.io/dappnode/staker-test-util/test-runner:latest
+
+  release:
+    name: Release
+    runs-on: ipfs-dev-gateway
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - name: Publish
+        run: npx @dappnode/dappnodesdk publish patch --content_provider=http://10.200.200.7:5001 --eth_provider=https://web3.dappnode.net --timeout 2h --all-variants
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEVELOPER_ADDRESS: "0xf35960302a07022aba880dffaec2fdd64d5bf1c1"
