@@ -1,0 +1,46 @@
+name: Execution Client Sync Test
+
+on:
+    workflow_dispatch:
+        inputs:
+            consensus_client:
+                description: "Consensus Client"
+                required: true
+                type: choice
+                options: [lodestar, teku, prysm, nimbus, lighthouse]
+    pull_request:
+        branches:
+            - "main"
+        paths-ignore:
+            - "README.md"
+
+jobs:
+    build:
+        runs-on: staking-test-hoodi
+        name: Build
+        outputs:
+            ipfs_hash: ${{ steps.extract_hash.outputs.ipfs_hash }}
+        steps:
+            - uses: actions/checkout@v6
+            - name: Build and upload
+              run: npx @dappnode/dappnodesdk build --provider=http://$(docker inspect DAppNodeCore-ipfs.dnp.dappnode.eth --format '{{.NetworkSettings.Networks.dncore_network.IPAddress}}'):5001 --variant=hoodi
+            - name: Extract IPFS hash from releases.json
+              id: extract_hash
+              run: |
+                  # Get the last key's hash from releases.json
+                  IPFS_HASH=$(jq -r 'to_entries | last | .value.hash' package_variants/hoodi/releases.json)
+                  echo "ipfs_hash=$IPFS_HASH" >> $GITHUB_OUTPUT
+                  echo "Extracted IPFS hash: $IPFS_HASH"
+
+    sync-test:
+        runs-on: staking-test-hoodi
+        name: Execution Client Sync Test
+        needs: [build]
+        steps:
+            - name: Run sync
+              run: |
+                  docker run --rm --pull=always --network dncore_network \
+                    -v /var/run/docker.sock:/var/run/docker.sock \
+                    -e MODE=sync -e EXECUTION_CLIENT='reth' -e IPFS_HASH=${{ needs.build.outputs.ipfs_hash }} -e CONSENSUS_CLIENT=${{ github.event.inputs.consensus_client }} \
+                    -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -e GITHUB_REPOSITORY=${{ github.repository }} -e GITHUB_PR_NUMBER=${{ github.event.pull_request.number }} -e GITHUB_RUN_ID=${{ github.run_id }} -e GITHUB_SERVER_URL=${{ github.server_url }} \
+                    ghcr.io/dappnode/staker-test-util/test-runner:latest

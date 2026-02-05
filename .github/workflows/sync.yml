@@ -1,0 +1,26 @@
+name: Execution Client Sync Production
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+    inputs:
+      consensus_client:
+        description: "Consensus Client"
+        required: true
+        type: choice
+        options: [lodestar, teku, prysm, nimbus, lighthouse]
+
+jobs:
+  sync:
+    runs-on: staking-test-hoodi
+    steps:
+      - name: Run sync
+        run: |
+          docker run --rm --pull=always --network dncore_network \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -e MODE=sync \
+            -e EXECUTION_CLIENT='reth' \
+            -e CONSENSUS_CLIENT=${{ github.event.inputs.consensus_client }} \
+            -e NETWORK=hoodi \
+            ghcr.io/dappnode/staker-test-util/test-runner:latest
