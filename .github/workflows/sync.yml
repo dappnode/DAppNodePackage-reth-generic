@@ -24,3 +24,11 @@ jobs:
             -e CONSENSUS_CLIENT=${{ github.event.inputs.consensus_client }} \
             -e NETWORK=hoodi \
             ghcr.io/dappnode/staker-test-util/test-runner:latest
+  notify:
+    needs: sync
+    if: always() && needs.sync.result != 'skipped'
+    uses: dappnode/staker-test-util/.github/workflows/notify-discord.yml@main
+    with:
+      result: ${{ needs.sync.result }}
+      test_type: "sync"
+    secrets: inherit
