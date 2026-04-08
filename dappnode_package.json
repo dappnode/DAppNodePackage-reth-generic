@@ -2,7 +2,7 @@
   "upstream": [
     {
       "repo": "paradigmxyz/reth",
-      "version": "v1.11.3",
+      "version": "v2.0.0",
       "arg": "UPSTREAM_VERSION"
     },
     {
