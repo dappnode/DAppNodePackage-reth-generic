@@ -37,10 +37,15 @@ jobs:
         name: Execution Client Sync Test
         needs: [build]
         steps:
+            - uses: actions/create-github-app-token@v1
+              id: app-token
+              with:
+                  app-id: ${{ vars.TROPI_APP_ID }}
+                  private-key: ${{ secrets.TROPI_APP_PRIVATE_KEY }}
             - name: Run sync
               run: |
                   docker run --rm --pull=always --network dncore_network \
                     -v /var/run/docker.sock:/var/run/docker.sock \
                     -e MODE=sync -e EXECUTION_CLIENT='reth' -e IPFS_HASH=${{ needs.build.outputs.ipfs_hash }} -e CONSENSUS_CLIENT=${{ github.event.inputs.consensus_client }} \
-                    -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -e GITHUB_REPOSITORY=${{ github.repository }} -e GITHUB_PR_NUMBER=${{ github.event.pull_request.number }} -e GITHUB_RUN_ID=${{ github.run_id }} -e GITHUB_SERVER_URL=${{ github.server_url }} \
+                    -e GITHUB_TOKEN=${{ steps.app-token.outputs.token }} -e GITHUB_REPOSITORY=${{ github.repository }} -e GITHUB_PR_NUMBER=${{ github.event.pull_request.number }} -e GITHUB_RUN_ID=${{ github.run_id }} -e GITHUB_SERVER_URL=${{ github.server_url }} \
                     ghcr.io/dappnode/staker-test-util/test-runner:latest

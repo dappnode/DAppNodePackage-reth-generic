@@ -37,13 +37,18 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.TROPI_APP_ID }}
+          private-key: ${{ secrets.TROPI_APP_PRIVATE_KEY }}
       - name: Run staker test runner
         run: |
           docker run --rm --pull=always \
             --network dncore_network -e CONSENSUS_CLIENT=${{ github.event.inputs.consensus_client }} \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -e MODE=test -e IPFS_HASH=${{ needs.build.outputs.ipfs_hash }} \
-            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -e GITHUB_REPOSITORY=${{ github.repository }} -e GITHUB_PR_NUMBER=${{ github.event.pull_request.number }} -e GITHUB_RUN_ID=${{ github.run_id }} -e GITHUB_SERVER_URL=${{ github.server_url }} \
+            -e GITHUB_TOKEN=${{ steps.app-token.outputs.token }} -e GITHUB_REPOSITORY=${{ github.repository }} -e GITHUB_PR_NUMBER=${{ github.event.pull_request.number }} -e GITHUB_RUN_ID=${{ github.run_id }} -e GITHUB_SERVER_URL=${{ github.server_url }} \
             ghcr.io/dappnode/staker-test-util/test-runner:latest
 
   release:
@@ -55,8 +60,13 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "22"
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.TROPI_APP_ID }}
+          private-key: ${{ secrets.TROPI_APP_PRIVATE_KEY }}
       - name: Publish
         run: npx @dappnode/dappnodesdk publish patch --github-release --content_provider=http://10.200.200.7:5001 --eth_provider=https://web3.dappnode.net --timeout 2h --all-variants
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           DEVELOPER_ADDRESS: "0xf35960302a07022aba880dffaec2fdd64d5bf1c1"

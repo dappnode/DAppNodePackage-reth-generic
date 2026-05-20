@@ -13,8 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.TROPI_APP_ID }}
+          private-key: ${{ secrets.TROPI_APP_PRIVATE_KEY }}
       - run: npx @dappnode/dappnodesdk github-action bump-upstream --use-variants
         env:
-          GITHUB_TOKEN: ${{ secrets.DAPPNODE_ACTIONS_PR_CREATOR }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           PINATA_API_KEY: ${{ secrets.PINATA_API_KEY }}
           PINATA_SECRET_API_KEY: ${{ secrets.PINATA_SECRET_API_KEY }}
