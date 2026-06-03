@@ -1,6 +1,8 @@
-name: Release
+name: Execution Client Sync Production
 
 on:
+  schedule:
+    - cron: "0 5 * * *"
   workflow_dispatch:
     inputs:
       consensus_client:
@@ -8,16 +10,11 @@ on:
         required: true
         type: choice
         options: [lodestar, teku, prysm, nimbus, lighthouse]
-  push:
-    branches:
-      - "main"
-    paths-ignore:
-      - "README.md"
 
 jobs:
-  release:
-    uses: dappnode/workflows/.github/workflows/staking-release.yml@master
+  sync:
+    uses: dappnode/workflows/.github/workflows/sync-production.yml@master
     with:
-      package_variant: "hoodi"
+      execution_client: "reth"
       consensus_client: ${{ inputs.consensus_client || '' }}
     secrets: inherit
