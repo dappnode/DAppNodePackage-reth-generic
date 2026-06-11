@@ -1,34 +1,44 @@
 {
-  "upstream": [
-    {
-      "repo": "paradigmxyz/reth",
-      "version": "v2.2.0",
-      "arg": "UPSTREAM_VERSION"
-    },
-    {
-      "repo": "dappnode/staker-package-scripts",
-      "version": "v0.1.2",
-      "arg": "STAKER_SCRIPTS_VERSION"
-    }
+  "architectures": [
+    "linux/amd64"
   ],
-  "shortDescription": "Reth is the Rust implementation of the Ethereum protocol.",
-  "description": "Ethereum is a global, open-source platform for decentralized applications where you can write code that controls digital value, runs exactly as programmed, and is accessible anywhere in the world.",
-  "type": "service",
-  "architectures": ["linux/amd64"],
-  "chain": "ethereum",
-  "dockerTimeout": "20min",
   "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
-  "categories": ["Blockchain"],
-  "keywords": ["reth", "rust-ethereum", "ethereum", "client", "execution"],
+  "bugs": {
+    "url": "https://github.com/dappnode/DAppNodePackage-reth-generic/issues"
+  },
+  "categories": [
+    "Blockchain"
+  ],
+  "chain": "ethereum",
+  "description": "Ethereum is a global, open-source platform for decentralized applications where you can write code that controls digital value, runs exactly as programmed, and is accessible anywhere in the world.",
+  "dockerTimeout": "20min",
+  "keywords": [
+    "reth",
+    "rust-ethereum",
+    "ethereum",
+    "client",
+    "execution"
+  ],
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/dappnode/DAppNodePackage-reth-generic.git"
   },
-  "bugs": {
-    "url": "https://github.com/dappnode/DAppNodePackage-reth-generic/issues"
-  },
   "requirements": {
     "minimumDappnodeVersion": "0.2.106"
-  }
+  },
+  "shortDescription": "Reth is the Rust implementation of the Ethereum protocol.",
+  "type": "service",
+  "upstream": [
+    {
+      "arg": "UPSTREAM_VERSION",
+      "repo": "paradigmxyz/reth",
+      "version": "v2.3.0"
+    },
+    {
+      "arg": "STAKER_SCRIPTS_VERSION",
+      "repo": "dappnode/staker-package-scripts",
+      "version": "v0.1.2"
+    }
+  ]
 }
