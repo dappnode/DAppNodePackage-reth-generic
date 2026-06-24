@@ -10,6 +10,11 @@ on:
         required: true
         type: choice
         options: [lodestar, teku, prysm, nimbus, lighthouse]
+      ipfs_hash:
+        description: "Optional pre-built IPFS hash to test against"
+        required: false
+        type: string
+        default: ""
 
 jobs:
   attestation-test:
@@ -20,4 +25,5 @@ jobs:
       pr_number: ${{ github.event.client_payload.pr_number || github.event.pull_request.number || '' }}
       head_ref: ${{ github.event.client_payload.head_ref || github.event.pull_request.head.ref || github.ref_name }}
       sender: ${{ github.event.client_payload.sender || github.event.pull_request.user.login || github.actor }}
+      ipfs_hash: ${{ github.event.client_payload.ipfs_hash || inputs.ipfs_hash || '' }}
     secrets: inherit
