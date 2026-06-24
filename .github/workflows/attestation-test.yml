@@ -1,8 +1,8 @@
-name: Execution Client Sync Test
+name: Proof of Attestation
 
 on:
   repository_dispatch:
-    types: [tropibot-sync-test]
+    types: [tropibot-attestation-test]
   workflow_dispatch:
     inputs:
       consensus_client:
@@ -10,15 +10,10 @@ on:
         required: true
         type: choice
         options: [lodestar, teku, prysm, nimbus, lighthouse]
-  pull_request:
-    branches:
-      - "main"
-    paths-ignore:
-      - "README.md"
 
 jobs:
-  sync-test:
-    uses: dappnode/workflows/.github/workflows/staking-sync-test.yml@master
+  attestation-test:
+    uses: dappnode/workflows/.github/workflows/staking-attestation-test.yml@master
     with:
       execution_client: "reth"
       consensus_client: ${{ github.event.client_payload.consensus_client || inputs.consensus_client || '' }}
