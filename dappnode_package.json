@@ -33,7 +33,7 @@
     {
       "arg": "UPSTREAM_VERSION",
       "repo": "paradigmxyz/reth",
-      "version": "v2.10.1"
+      "version": "v2.11.0"
     },
     {
       "arg": "STAKER_SCRIPTS_VERSION",
