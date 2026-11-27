@@ -73,15 +73,20 @@ if [ "${STORAGE_MODE}" = custom ]; then
 elif [ "${DOWNLOAD_SNAPSHOT}" = true ]; then
   if is_data_dir_initialized; then
     echo "[INFO - entrypoint] Reth data directory already initialized; skipping snapshot download"
+  elif [ "${NETWORK}" != mainnet ]; then
+    # reth download only auto-discovers snapshots for Ethereum mainnet
+    echo "[INFO - entrypoint] No Reth snapshot available for ${NETWORK}; syncing from genesis"
   else
     echo "[INFO - entrypoint] Downloading ${NETWORK} ${SNAPSHOT_MODE_FLAG#--} snapshot before starting Reth"
     # shellcheck disable=SC2086
-    reth \
+    if ! reth \
       download \
       -y \
       ${SNAPSHOT_MODE_FLAG} \
       --chain "${NETWORK}" \
-      --datadir "${DATA_DIR}"
+      --datadir "${DATA_DIR}"; then
+      echo "[WARN - entrypoint] Snapshot download failed; falling back to syncing ${NETWORK} from genesis"
+    fi
   fi
 fi
 
